@@ -1,7 +1,7 @@
 package me.pandamods.pandalib.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.pandamods.pandalib.resources.ArmatureRecord;
+import me.pandamods.pandalib.resources.ArmatureData;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.joml.Matrix4f;
@@ -32,7 +32,7 @@ public class Bone {
 		this.resetParent();
 	}
 
-	public Bone(Armature armature, String name, ArmatureRecord.Bone bone) {
+	public Bone(Armature armature, String name, ArmatureData.Bone bone) {
 		this(
 				armature,
 				name,

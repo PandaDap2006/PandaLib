@@ -1,6 +1,6 @@
 package me.pandamods.pandalib.client.model;
 
-import me.pandamods.pandalib.resources.ArmatureRecord;
+import me.pandamods.pandalib.resources.ArmatureData;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -25,7 +25,7 @@ public class Armature {
 	protected boolean mirrorYScale = false;
 	protected boolean mirrorZScale = false;
 
-	public Armature(ArmatureRecord armature) {
+	public Armature(ArmatureData armature) {
 		armature.bones().forEach((s, bone) -> bones.add(new Bone(this, s, bone)));
 		updatedBones.addAll(bones);
 	}

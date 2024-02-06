@@ -8,7 +8,6 @@ import me.pandamods.pandalib.PandaLib;
 import me.pandamods.pandalib.utils.gsonadapter.QuaternionfTypeAdapter;
 import me.pandamods.pandalib.utils.gsonadapter.Vector2fTypeAdapter;
 import me.pandamods.pandalib.utils.gsonadapter.Vector3fTypeAdapter;
-import me.pandamods.pandalib.utils.gsonadapter.Vector4fTypeAdapter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
@@ -20,7 +19,6 @@ import org.apache.commons.io.IOUtils;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -32,6 +30,7 @@ import java.util.concurrent.Executor;
 import java.util.function.BiConsumer;
 
 public class Resources {
+	private static final String FORMAT_VERSION_NAME = "format_version";
 	private static final String SUPPORTED_MESH_VERSION = "0.3";
 	private static final String SUPPORTED_ARMATURE_VERSION = "0.1";
 	private static final String SUPPORTED_ANIMATION_VERSION = "0.2";
@@ -42,9 +41,9 @@ public class Resources {
 			.registerTypeAdapter(Quaternionf.class, new QuaternionfTypeAdapter())
 			.create();
 
-	public static Map<ResourceLocation, MeshRecord> MESHES = new HashMap<>();
-	public static Map<ResourceLocation, ArmatureRecord> ARMATURES = new HashMap<>();
-	public static Map<ResourceLocation, AnimationRecord> ANIMATIONS = new HashMap<>();
+	public static Map<ResourceLocation, MeshData> MESHES = new HashMap<>();
+	public static Map<ResourceLocation, ArmatureData> ARMATURES = new HashMap<>();
+	public static Map<ResourceLocation, AnimationData> ANIMATIONS = new HashMap<>();
 
 	public static void registerReloadListener() {
 		Minecraft mc = Minecraft.getInstance();
@@ -57,16 +56,16 @@ public class Resources {
 	public static CompletableFuture<Void> reload(PreparableReloadListener.PreparationBarrier preparationBarrier, ResourceManager manager,
 												 ProfilerFiller profilerFiller, ProfilerFiller profilerFiller1,
 												 Executor executor, Executor executor1) {
-		Map<ResourceLocation, MeshRecord> meshes = new Object2ObjectOpenHashMap<>();
-		Map<ResourceLocation, ArmatureRecord> armatures = new Object2ObjectOpenHashMap<>();
-		Map<ResourceLocation, AnimationRecord> animations = new Object2ObjectOpenHashMap<>();
+		Map<ResourceLocation, MeshData> meshes = new Object2ObjectOpenHashMap<>();
+		Map<ResourceLocation, ArmatureData> armatures = new Object2ObjectOpenHashMap<>();
+		Map<ResourceLocation, AnimationData> animations = new Object2ObjectOpenHashMap<>();
 
 		return CompletableFuture.allOf(
-						load("mesh", "meshes", SUPPORTED_MESH_VERSION, MeshRecord.class,
+						load("mesh", "meshes", SUPPORTED_MESH_VERSION, MeshData.class,
 								executor, manager, meshes::put),
-						load("armature", "armatures", SUPPORTED_ARMATURE_VERSION, ArmatureRecord.class,
+						load("armature", "armatures", SUPPORTED_ARMATURE_VERSION, ArmatureData.class,
 								executor, manager, armatures::put),
-						load("animation", "animations", SUPPORTED_ANIMATION_VERSION, AnimationRecord.class,
+						load("animation", "animations", SUPPORTED_ANIMATION_VERSION, AnimationData.class,
 								executor, manager, animations::put)
 				).thenCompose(preparationBarrier::wait)
 				.thenAcceptAsync(unused -> Resources.MESHES = meshes, executor1)
@@ -74,9 +73,9 @@ public class Resources {
 				.thenAcceptAsync(unused -> Resources.ANIMATIONS = animations, executor1);
 	}
 
-	private static <C> CompletableFuture<Void> load(String typeName, String directory, String formatVersion, Class<C> modelClass,
-												Executor executor, ResourceManager resourceManager,
-												BiConsumer<ResourceLocation, C> map) {
+	private static <C> CompletableFuture<Void> load(String typeName, String directory, String formatVersion,
+													Class<C> modelClass, Executor executor, ResourceManager resourceManager,
+													BiConsumer<ResourceLocation, C> map) {
 		return CompletableFuture.supplyAsync(() ->
 				resourceManager.listResources("pandalib/" + directory, resource ->
 						resource.getPath().endsWith(".json")), executor).thenApplyAsync(resources -> {
@@ -84,8 +83,10 @@ public class Resources {
 
 			for (ResourceLocation resource : resources.keySet()) {
 				JsonObject json = loadFile(resource, resourceManager);
-				if (!json.has("format_version") || !json.get("format_version").getAsString().equals(formatVersion)) {
-					PandaLib.LOGGER.error(typeName + " format version " + formatVersion + " is not supported");
+				if (!json.has(FORMAT_VERSION_NAME))
+					continue;
+				if (!json.get(FORMAT_VERSION_NAME).getAsString().equals(formatVersion)) {
+					PandaLib.LOGGER.error(typeName + " format version " + json.get(FORMAT_VERSION_NAME) + " is not supported");
 					continue;
 				}
 
@@ -99,10 +100,6 @@ public class Resources {
 				map.accept(entry.getKey(), entry.getValue().join());
 			}
 		}, executor);
-	}
-
-	public static AnimationRecord loadFiles(ResourceLocation location, ResourceManager manager) {
-		return GSON.fromJson(loadFile(location, manager), AnimationRecord.class);
 	}
 
 	public static JsonObject loadFile(ResourceLocation location, ResourceManager manager) {

@@ -1,7 +1,7 @@
 package me.pandamods.pandalib.client.animation_controller;
 
 import me.pandamods.pandalib.PandaLib;
-import me.pandamods.pandalib.resources.AnimationRecord;
+import me.pandamods.pandalib.resources.AnimationData;
 import me.pandamods.pandalib.resources.Resources;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
@@ -10,13 +10,13 @@ import org.joml.Vector3f;
 
 import java.util.Map;
 
-public record Animation(AnimationRecord rawAnimation, PlayType playType) {
+public record Animation(AnimationData rawAnimation, PlayType playType) {
 	public static Animation of(ResourceLocation location) {
 		return of(location, PlayType.PLAY);
 	}
 
 	public static Animation of(ResourceLocation location, PlayType playType) {
-		AnimationRecord rawAnimation = Resources.ANIMATIONS.get(location);
+		AnimationData rawAnimation = Resources.ANIMATIONS.get(location);
 		if (rawAnimation != null)
 			return new Animation(Resources.ANIMATIONS.get(location), playType);
 		else {
@@ -26,7 +26,7 @@ public record Animation(AnimationRecord rawAnimation, PlayType playType) {
 	}
 
 	public Matrix4f getBoneTransform(String boneName, float time) {
-		AnimationRecord.Bone bone = rawAnimation.bones().get(boneName);
+		AnimationData.Bone bone = rawAnimation.bones().get(boneName);
 
 		if (bone == null) {
 			return new Matrix4f().identity();
