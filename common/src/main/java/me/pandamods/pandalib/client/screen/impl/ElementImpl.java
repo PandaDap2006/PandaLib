@@ -1,6 +1,17 @@
 package me.pandamods.pandalib.client.screen.impl;
 
+import com.mojang.blaze3d.platform.Window;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+
 public interface ElementImpl extends PanelImpl {
+	@Override
+	default void render(GuiGraphics guiGraphics, double mouseX, double mouseY, float partialTick) {
+		if (isVisible()) {
+			PanelImpl.super.render(guiGraphics, mouseX, mouseY, partialTick);
+		}
+	}
+
 	default boolean hasParent() {
 		return getParent() != null;
 	}
@@ -60,4 +71,8 @@ public interface ElementImpl extends PanelImpl {
 
 	boolean isActive();
 	void setActive(boolean active);
+	default boolean isVisible() {
+		Window window = Minecraft.getInstance().getWindow();
+		return getMaxX() > 0 && getMaxY() > 0 && getMinX() < window.getGuiScaledWidth() && getMinY() < window.getGuiScaledHeight();
+	}
 }

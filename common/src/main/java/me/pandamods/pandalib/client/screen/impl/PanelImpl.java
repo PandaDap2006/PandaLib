@@ -1,8 +1,11 @@
 package me.pandamods.pandalib.client.screen.impl;
 
+import me.pandamods.pandalib.utils.ScreenUtils;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PanelImpl {
 	void initElement();
@@ -29,5 +32,11 @@ public interface PanelImpl {
 	default void rebuild() {
 		clearElements();
 		init();
+	}
+
+	default Optional<ElementImpl> getHoveredElement(double mouseX, double mouseY) {
+		return elements().stream().filter(element ->
+				ScreenUtils.isMouseOver(mouseX, mouseY, element.getMinX(), element.getMinY(), element.getMaxX(), element.getMaxY())
+		).findFirst();
 	}
 }

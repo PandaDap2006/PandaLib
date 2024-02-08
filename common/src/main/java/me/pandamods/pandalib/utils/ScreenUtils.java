@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class ScreenUtils {
-	public static boolean isMouseOver(double mouseX, double mouseY, int minX, int minY, int maxX, int maxY) {
+	public static boolean isMouseOver(double mouseX, double mouseY, double minX, double minY, double maxX, double maxY) {
 		return minX <= mouseX && maxX >= mouseX && minY <= mouseY && maxY >= mouseY;
 	}
 }
