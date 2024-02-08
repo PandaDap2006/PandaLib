@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import me.pandamods.pandalib.client.screen.impl.ElementImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,19 @@ public abstract class UIElement implements ElementImpl {
 	private double width;
 	private double height;
 	private boolean active = true;
+	private boolean hovered = false;
 
 	protected UIElement(ElementImpl parent) {
 		this.parent = parent;
 		this.minecraft = Minecraft.getInstance();
 		this.font = this.minecraft.font;
 		this.window = this.minecraft.getWindow();
+	}
+
+	@Override
+	public void render(GuiGraphics guiGraphics, double mouseX, double mouseY, float partialTick) {
+		ElementImpl.super.render(guiGraphics, mouseX, mouseY, partialTick);
+		hovered = this.isAt(mouseX, mouseY) && getElementAt(mouseX, mouseY).isEmpty();
 	}
 
 	@Override
@@ -92,5 +100,9 @@ public abstract class UIElement implements ElementImpl {
 	@Override
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public boolean isHovered() {
+		return hovered;
 	}
 }

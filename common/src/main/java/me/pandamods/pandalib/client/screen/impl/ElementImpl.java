@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 
+import java.util.Optional;
+
 public interface ElementImpl extends PanelImpl {
 	@Override
 	default void render(GuiGraphics guiGraphics, double mouseX, double mouseY, float partialTick) {
@@ -74,5 +76,9 @@ public interface ElementImpl extends PanelImpl {
 	default boolean isVisible() {
 		Window window = Minecraft.getInstance().getWindow();
 		return getMaxX() > 0 && getMaxY() > 0 && getMinX() < window.getGuiScaledWidth() && getMinY() < window.getGuiScaledHeight();
+	}
+
+	default boolean isAt(double x, double y) {
+		return getMinX() <= x && getMaxX() >= x && getMinY() <= y && getMaxY() >= y;
 	}
 }

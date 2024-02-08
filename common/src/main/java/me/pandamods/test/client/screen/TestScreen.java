@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component;
 public class TestScreen extends GUI {
 	@Override
 	public void initElement() {
-		register(new Button(null, 0, 0, 200, 20, Component.literal("test")));
+		register(new Button(null, 0, 0, 200, 20, Component.literal("test"), () -> {}));
 	}
 
 	@Override

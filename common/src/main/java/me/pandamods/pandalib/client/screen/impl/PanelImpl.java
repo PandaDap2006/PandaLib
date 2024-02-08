@@ -34,9 +34,43 @@ public interface PanelImpl {
 		init();
 	}
 
-	default Optional<ElementImpl> getHoveredElement(double mouseX, double mouseY) {
-		return elements().stream().filter(element ->
-				ScreenUtils.isMouseOver(mouseX, mouseY, element.getMinX(), element.getMinY(), element.getMaxX(), element.getMaxY())
-		).findFirst();
+	default Optional<ElementImpl> getElementAt(double x, double y) {
+		for (ElementImpl element : elements()) {
+			if (element.isAt(x, y)) {
+				Optional<ElementImpl> child = element.getElementAt(x, y);
+				if (child.isPresent())
+					return child;
+				return Optional.of(element);
+			}
+		}
+		return Optional.empty();
+	}
+
+	default boolean onMousePress(double mouseX, double mouseY, int button) {
+		return getElementAt(mouseX, mouseY).map(element -> element.onMousePress(mouseX, mouseY, button)).orElse(false);
+	}
+
+	default boolean onMouseRelease(double mouseX, double mouseY, int button) {
+		return getElementAt(mouseX, mouseY).map(element -> element.onMouseRelease(mouseX, mouseY, button)).orElse(false);
+	}
+
+	default void onMouseMove(double mouseX, double mouseY) {
+		getElementAt(mouseX, mouseY).ifPresent(element -> element.onMouseMove(mouseX, mouseY));
+	}
+
+	default boolean onMouseScroll(double mouseX, double mouseY, double delta) {
+		return getElementAt(mouseX, mouseY).map(element -> element.onMouseScroll(mouseX, mouseY, delta)).orElse(false);
+	}
+
+	default boolean onMouseDrag(double mouseX, double mouseY, int button, double dragX, double dragY) {
+		return getElementAt(mouseX, mouseY).map(element -> element.onMouseDrag(mouseX, mouseY, button, dragX, dragY)).orElse(false);
+	}
+
+	default boolean onKeyPress(int keyCode, int scanCode, int modifiers) {
+		return false;
+	}
+
+	default boolean onKeyRelease(int keyCode, int scanCode, int modifiers) {
+		return false;
 	}
 }
