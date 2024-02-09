@@ -1,6 +1,7 @@
 package me.pandamods.pandalib.client.screen.elements.buttons;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.pandamods.pandalib.client.screen.GUI;
 import me.pandamods.pandalib.client.screen.UIElement;
 import me.pandamods.pandalib.client.screen.impl.ElementImpl;
 import net.minecraft.Util;
@@ -16,15 +17,14 @@ import net.minecraft.util.Mth;
 public abstract class AbstractButton extends UIElement {
 	public static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation("textures/gui/widgets.png");
 
-	public AbstractButton(ElementImpl parent, double x, double y, double width, double height) {
-		super(parent);
+	public AbstractButton(GUI gui, ElementImpl parent, double x, double y, double width, double height) {
+		super(gui, parent);
 		setPosition(x, y);
 		setSize(width, height);
 	}
 
 	@Override
 	public void initElement() {
-
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public abstract class AbstractButton extends UIElement {
 		int i = 1;
 		if (!this.isActive()) {
 			i = 0;
-		} else if (this.isHovered()) {
+		} else if (this.isHoveredOrFocused()) {
 			i = 2;
 		}
 		return 46 + i * 20;

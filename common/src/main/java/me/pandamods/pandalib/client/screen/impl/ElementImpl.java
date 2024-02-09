@@ -1,7 +1,9 @@
 package me.pandamods.pandalib.client.screen.impl;
 
 import com.mojang.blaze3d.platform.Window;
+import me.pandamods.pandalib.client.screen.GUI;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.Optional;
@@ -19,6 +21,7 @@ public interface ElementImpl extends PanelImpl {
 	}
 	ElementImpl getParent();
 	void setParent(ElementImpl parent);
+	GUI getGUI();
 
 	double getX();
 	double getY();
@@ -80,5 +83,17 @@ public interface ElementImpl extends PanelImpl {
 
 	default boolean isAt(double x, double y) {
 		return getMinX() <= x && getMaxX() >= x && getMinY() <= y && getMaxY() >= y;
+	}
+
+	boolean isHovered();
+
+	boolean isFocused();
+
+	default boolean isHoveredOrFocused() {
+		return isFocused() || isHovered();
+	}
+
+	default void setFocused() {
+		this.getGUI().setFocused(this);
 	}
 }

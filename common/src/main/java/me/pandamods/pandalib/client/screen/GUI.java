@@ -20,6 +20,9 @@ public abstract class GUI implements PanelImpl {
 	public final Font font;
 	public final Window window;
 
+	private ElementImpl hovered = null;
+	private ElementImpl focused = null;
+
 	public GUI() {
 		this.screen = new GUIScreen(this);
 		this.minecraft = Minecraft.getInstance();
@@ -46,5 +49,38 @@ public abstract class GUI implements PanelImpl {
 
 	public void renderDirtBackground(GuiGraphics guiGraphics) {
 		screen().renderDirtBackground(guiGraphics);
+	}
+
+	public ElementImpl getHovered() {
+		return hovered;
+	}
+
+	public void setHovered(ElementImpl hovered) {
+		this.hovered = hovered;
+	}
+
+	public ElementImpl getFocused() {
+		return focused;
+	}
+
+	public void setFocused(ElementImpl focused) {
+		this.focused = focused;
+	}
+
+	@Override
+	public void onMouseMove(double mouseX, double mouseY) {
+		if (this.getHovered() == null || !this.getHovered().isAt(mouseX, mouseY))
+			this.setHovered(this.getElementAt(mouseX, mouseY).orElse(null));
+		PanelImpl.super.onMouseMove(mouseX, mouseY);
+	}
+
+	@Override
+	public boolean onKeyPress(int keyCode, int scanCode, int modifiers) {
+		return getFocused().onKeyPress(keyCode, scanCode, modifiers);
+	}
+
+	@Override
+	public boolean onKeyRelease(int keyCode, int scanCode, int modifiers) {
+		return getFocused().onKeyRelease(keyCode, scanCode, modifiers);
 	}
 }

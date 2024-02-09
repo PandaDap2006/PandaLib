@@ -1,8 +1,6 @@
 package me.pandamods.pandalib.client.screen.impl;
 
-import me.pandamods.pandalib.utils.ScreenUtils;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 
 import java.util.List;
 import java.util.Optional;

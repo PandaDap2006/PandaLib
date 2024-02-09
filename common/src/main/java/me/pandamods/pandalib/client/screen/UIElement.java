@@ -15,25 +15,20 @@ public abstract class UIElement implements ElementImpl {
 	public final Minecraft minecraft;
 	public final Font font;
 	public final Window window;
+	private final GUI gui;
 	private ElementImpl parent;
 	private double x;
 	private double y;
 	private double width;
 	private double height;
 	private boolean active = true;
-	private boolean hovered = false;
 
-	protected UIElement(ElementImpl parent) {
+	protected UIElement(GUI gui, ElementImpl parent) {
+		this.gui = gui;
 		this.parent = parent;
 		this.minecraft = Minecraft.getInstance();
 		this.font = this.minecraft.font;
 		this.window = this.minecraft.getWindow();
-	}
-
-	@Override
-	public void render(GuiGraphics guiGraphics, double mouseX, double mouseY, float partialTick) {
-		ElementImpl.super.render(guiGraphics, mouseX, mouseY, partialTick);
-		hovered = this.isAt(mouseX, mouseY) && getElementAt(mouseX, mouseY).isEmpty();
 	}
 
 	@Override
@@ -43,6 +38,11 @@ public abstract class UIElement implements ElementImpl {
 	@Override
 	public void setParent(ElementImpl parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public GUI getGUI() {
+		return gui;
 	}
 
 	@Override
@@ -102,7 +102,13 @@ public abstract class UIElement implements ElementImpl {
 		this.active = active;
 	}
 
+	@Override
 	public boolean isHovered() {
-		return hovered;
+		return this.getGUI().getHovered().equals(this);
+	}
+
+	@Override
+	public boolean isFocused() {
+		return this.getGUI().getFocused().equals(this);
 	}
 }

@@ -1,6 +1,7 @@
 package me.pandamods.pandalib.client.screen.elements.buttons;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.pandamods.pandalib.client.screen.GUI;
 import me.pandamods.pandalib.client.screen.UIElement;
 import me.pandamods.pandalib.client.screen.impl.ElementImpl;
 import net.minecraft.Util;
@@ -14,14 +15,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 
+import javax.xml.crypto.dsig.keyinfo.KeyInfo;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.Callable;
 
 public class Button extends AbstractButton {
 	private final Component message;
 	private final Runnable onClick;
 
-	public Button(ElementImpl parent, double x, double y, double width, double height, Component message, Runnable onClick) {
-		super(parent, x, y, width, height);
+	public Button(GUI gui, ElementImpl parent, double x, double y, double width, double height, Component message, Runnable onClick) {
+		super(gui, parent, x, y, width, height);
 		this.message = message;
 		this.onClick = onClick;
 	}
