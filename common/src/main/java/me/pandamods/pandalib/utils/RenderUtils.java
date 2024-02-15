@@ -58,13 +58,4 @@ public class RenderUtils {
 	public static float getDeltaSeconds() {
 		return Minecraft.getInstance().getDeltaFrameTime() / 20;
 	}
-
-	public static Set<ResourceLocation> getBlockTextures(BlockState blockState, Direction direction) {
-		ModelManager manager = Minecraft.getInstance().getModelManager();
-		BakedModel model = manager.getBlockModelShaper().getBlockModel(blockState);
-		List<BakedQuad> quads = model.getQuads(blockState, direction, RandomSource.create());
-		Set<ResourceLocation> textures = new HashSet<>();
-		quads.forEach(bakedQuad -> textures.add(bakedQuad.getSprite().contents().name()));
-		return textures;
-	}
 }

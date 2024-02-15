@@ -1,6 +1,7 @@
 package me.pandamods.pandalib.utils;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
 import org.joml.Math;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
@@ -14,7 +15,8 @@ public class VectorUtils {
 	}
 
 	public static PoseStack rotateVector(PoseStack stack, Vector3f rotation) {
-		stack.mulPose(new Quaternionf().identity().rotateZYX(rotation.z, rotation.y, rotation.x));
+		Quaternionf quaternion = new Quaternionf().identity().rotateZYX(rotation.z, rotation.y, rotation.x);
+		stack.mulPose(new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w));
 		return stack;
 	}
 
