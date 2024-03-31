@@ -29,6 +29,8 @@ dependencies {
 
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
+    include(api("org.joml:joml:1.10.5"))
+
     modApi("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
