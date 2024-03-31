@@ -29,8 +29,8 @@
   "depends": {
     "fabric": "*",
     "fabric-api": "*",
-    "minecraft": ">=1.20",
-    "architectury": ">=9.1.12"
+    "minecraft": ">=1.19.2",
+    "architectury": ">=6.6.92"
   },
 	"custom": {
 		"modmenu": {
