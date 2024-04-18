@@ -3,7 +3,7 @@
   "id": "pandalib",
   "version": "${version}",
   "name": "PandaLib",
-  "description": "A multi purpose library with a Config API, Model and Animation API, Menu API and a bit of utility code.",
+  "description": "A multi purpose library with a Config API and a bit of utility code.",
   "authors": [
 		"Panda Mods/The Panda Oliver"
   ],
@@ -29,7 +29,7 @@
   "depends": {
     "fabric": "*",
     "fabric-api": "*",
-    "minecraft": ">=1.19.2",
+    "minecraft": "1.19.2",
     "architectury": ">=6.6.92"
   },
 	"custom": {
