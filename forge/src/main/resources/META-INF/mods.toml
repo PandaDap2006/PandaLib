@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[46,)"
+loaderVersion = "[43,)"
 license = "MIT"
 issueTrackerURL="https://github.com/PandaDap2006/PandaLib/issues"
 showAsResourcePack=false
@@ -15,20 +15,20 @@ description = "A multi purpose library with a Config API, Model and Animation AP
 [[dependencies.pandalib]]
 modId = "forge"
 mandatory = true
-versionRange = "[46,)"
+versionRange = "[43,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.pandalib]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20,)"
+versionRange = "[1.19.2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.pandalib]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.1.12,)"
+versionRange = "[6.6.92,)"
 ordering = "AFTER"
 side = "BOTH"
