@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[46,)"
-license = "MIT"
+license = "LGPL-3"
 issueTrackerURL="https://github.com/PandaDap2006/PandaLib/issues"
 showAsResourcePack=false
 
@@ -22,7 +22,7 @@ side = "BOTH"
 [[dependencies.pandalib]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20,)"
+versionRange = "[1.20,1.20.5)"
 ordering = "NONE"
 side = "BOTH"
 
