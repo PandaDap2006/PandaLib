@@ -7,8 +7,6 @@ import dev.architectury.platform.Platform;
 import me.pandamods.pandalib.api.config.Config;
 import me.pandamods.pandalib.api.config.ConfigData;
 import me.pandamods.pandalib.core.utils.ClassUtils;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,8 +112,8 @@ public class ConfigHolder<T extends ConfigData> {
 		return resourceLocation;
 	}
 
-	public MutableComponent getName() {
-		return Component.translatable(String.format("config.%s.%s", resourceLocation.getNamespace(), resourceLocation.getPath()));
+	public String getLangName() {
+		return String.format("config.%s.%s", resourceLocation.getNamespace(), resourceLocation.getPath());
 	}
 
 	public String modID() {
