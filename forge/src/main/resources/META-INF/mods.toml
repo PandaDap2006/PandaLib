@@ -8,14 +8,14 @@ showAsResourcePack=false
 modId = "pandalib"
 version = "${version}"
 displayName = "PandaLib"
-authors = "Panda Mods/The Panda Oliver"
+authors = "The Panda Oliver"
 logoFile = "icon.png"
-description = "A multi purpose library with a Config API, Model and Animation API, Menu API and a bit of utility code."
+description = "A multi purpose library with a Config API and a bit of utility code. More features planned"
 
 [[dependencies.pandalib]]
 modId = "forge"
 mandatory = true
-versionRange = "[43,)"
+versionRange = "[46,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -29,6 +29,6 @@ side = "BOTH"
 [[dependencies.pandalib]]
 modId = "architectury"
 mandatory = true
-versionRange = "[6.6.92,)"
+versionRange = "[1,)"
 ordering = "AFTER"
 side = "BOTH"

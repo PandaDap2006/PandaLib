@@ -1,23 +1,25 @@
 package me.pandamods.pandalib.core.network;
 
-import dev.architectury.event.events.client.ClientPlayerEvent;
-import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.networking.NetworkManager;
-import dev.architectury.platform.Platform;
-import dev.architectury.utils.Env;
 import io.netty.buffer.Unpooled;
 import me.pandamods.pandalib.PandaLib;
 import me.pandamods.pandalib.api.config.ConfigData;
 import me.pandamods.pandalib.api.config.PandaLibConfig;
 import me.pandamods.pandalib.api.config.holders.ClientConfigHolder;
 import me.pandamods.pandalib.api.config.holders.CommonConfigHolder;
-import me.pandamods.pandalib.core.event.EventHandler;
+import me.pandamods.pandalib.api.util.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ConfigNetworking {
 	public static final ResourceLocation CONFIG_PACKET = new ResourceLocation(PandaLib.MOD_ID, "config_sync");
+
+	public static void registerPackets() {
+		NetworkHelper.registerS2C(CONFIG_PACKET, ConfigNetworking::CommonConfigReceiver);
+
+		NetworkHelper.registerC2S(CONFIG_PACKET, ConfigNetworking::ClientConfigReceiver);
+	}
 
 	public static void SyncCommonConfigs(ServerPlayer serverPlayer) {
 		PandaLibConfig.getConfigs().values().stream()
@@ -45,14 +47,6 @@ public class ConfigNetworking {
 		byteBuf.writeResourceLocation(holder.resourceLocation());
 		byteBuf.writeUtf(holder.getGson().toJson(holder.get()));
 		NetworkManager.sendToServer(CONFIG_PACKET, byteBuf);
-	}
-
-	public static void RegisterReceivers() {
-		NetworkManager.registerReceiver(NetworkManager.clientToServer(), CONFIG_PACKET, ConfigNetworking::ClientConfigReceiver);
-
-		if (Platform.getEnvironment().equals(Env.CLIENT)) {
-			NetworkManager.registerReceiver(NetworkManager.serverToClient(), CONFIG_PACKET, ConfigNetworking::CommonConfigReceiver);
-		}
 	}
 
 	private static void ClientConfigReceiver(FriendlyByteBuf buf, NetworkManager.PacketContext context) {
