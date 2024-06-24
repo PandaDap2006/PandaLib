@@ -10,18 +10,14 @@
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.pandamods.pandalib.api.config;
+package me.pandamods.pandalib.neoforge;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import me.pandamods.pandalib.PandaLib;
+import net.neoforged.fml.common.Mod;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Config {
-	String modId();
-	String name();
-	String parentDirectory() default "";
-	boolean synchronize() default false;
+@Mod(PandaLib.MOD_ID)
+public class PandaLibNeoForge {
+    public PandaLibNeoForge() {
+		PandaLib.init();
+    }
 }

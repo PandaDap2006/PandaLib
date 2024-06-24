@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[46,)"
+loaderVersion = "[1,)"
 license = "LGPL-3"
 issueTrackerURL="https://github.com/PandaDap2006/PandaLib/issues"
 showAsResourcePack=false
@@ -13,22 +13,27 @@ logoFile = "icon.png"
 description = "A multi purpose library with a Config API and a bit of utility code. More features planned"
 
 [[dependencies.pandalib]]
-modId = "forge"
-mandatory = true
-versionRange = "[46,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[20.5.21-beta,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.pandalib]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20,1.20.5)"
+type = "required"
+versionRange = "[1.20.5,1.21)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.pandalib]]
 modId = "architectury"
-mandatory = true
+type = "required"
 versionRange = "[1,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[mixins]]
+config = "pandalib-common.mixins.json"
+[[mixins]]
+config = "pandalib.mixins.json"
