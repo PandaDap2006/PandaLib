@@ -66,7 +66,7 @@ public class ConfigNetworking {
 		PandaLibConfig.getConfig(resourceLocation).ifPresent(configHolder -> {
 			if (configHolder instanceof ClientConfigHolder<? extends ConfigData>) {
 				configHolder.logger.info("Received client config '{}' from {}",
-						configHolder.resourceLocation().toString(), packetContext.getPlayer().getDisplayName().getString());
+						configHolder.resourceLocation().toString(), context.getPlayer().getDisplayName().getString());
 				context.getPlayer().pandaLib$setConfig(configHolder.getGson().fromJson(buf.readUtf(), configHolder.getConfigClass()));
 			}
 		});
