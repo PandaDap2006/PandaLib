@@ -10,7 +10,7 @@
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.pandamods.pandalib.core.network;
+package me.pandamods.pandalib.network;
 
 import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;

@@ -15,8 +15,6 @@ package me.pandamods.pandalib.fabric;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.pandamods.pandalib.PandaLib;
-import me.pandamods.pandalib.api.config.PandaLibConfig;
-import me.pandamods.test.config.TestConfig;
 import net.fabricmc.api.ModInitializer;
 
 public class PandaLibFabric implements ModInitializer, ModMenuApi {
@@ -27,6 +25,6 @@ public class PandaLibFabric implements ModInitializer, ModMenuApi {
 
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		return screen -> PandaLibConfig.getConfigScreen(screen, TestConfig.class);
+		return screen -> null;
 	}
 }
