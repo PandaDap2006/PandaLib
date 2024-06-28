@@ -17,14 +17,9 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.pandamods.pandalib.PandaLib;
 import net.fabricmc.api.ModInitializer;
 
-public class PandaLibFabric implements ModInitializer, ModMenuApi {
+public class PandaLibFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         PandaLib.init();
     }
-
-	@Override
-	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		return screen -> null;
-	}
 }
