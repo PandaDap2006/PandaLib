@@ -29,9 +29,6 @@
     "minecraft": "=1.19.2",
     "architectury": "*"
   },
-	"recommends": {
-		"modmenu": "*"
-	},
 	"custom": {
 		"modmenu": {
 			"links": {
