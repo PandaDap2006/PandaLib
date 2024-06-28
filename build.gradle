@@ -24,6 +24,8 @@ forgix {
         projectName = "forge"
         jarLocation = "build/libs/${rootProject.archives_name}-forge-${version}.jar"
     }
+
+    removeDuplicate "me.pandamods.pandalib"
 }
 
 allprojects {
